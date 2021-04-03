@@ -84,3 +84,4 @@ production:
   database: my_sous_backend_production
   username: my_sous_backend
   password: <%= ENV['MY_SOUS_BACKEND_DATABASE_PASSWORD'] %>
+  adapter: "postgresql"
