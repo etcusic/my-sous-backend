@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+Thing.delete_all
 Thing.create(words: "Hello, Github Pages!")
 Thing.create(words: "I'm Heroku")
 Thing.create(words: "Do you want to work together?")
