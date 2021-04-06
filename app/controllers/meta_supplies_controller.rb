@@ -1,0 +1,2 @@
+class MetaSuppliesController < ApplicationController
+end

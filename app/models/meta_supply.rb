@@ -1,0 +1,2 @@
+class MetaSupply < ApplicationRecord
+end

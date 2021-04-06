@@ -1,10 +1,14 @@
+# rails g resource MetaSupply name:string category:string sub_category:string
 # rails g resource User name:string
 
+# rails g resource Store user:belongs_to name:string
 # rails g resource Pantry user:belongs_to 
 # rails g resource GroceryList user:belongs_to
 # rails g resource Recipe user:belongs_to name:string servings:integer instructions:text meal:boolean
 
-# rails g resource Ingredient name:string unit:string cost_per_unit:float category:string
+# rails g resource StoreSupply store:belongs_to meta_supply:belongs_to unit:string cost_per_unit:float
+# rails g resource Ingredient user:belongs_to meta_supply:belongs_to name:string category:string unit:string current_cost_per_unit:float running_quantity:float running_cost:float
+
 # rails g model PantryIngredient pantry:belongs_to ingredient:belongs_to quantity:float
 # rails g model GroceryListIngredient grocery_list:belongs_to ingredient:belongs_to quantity:float
 # rails g model RecipeIngredient recipe:belongs_to ingredient:belongs_to quantity:float
