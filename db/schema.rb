@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_142006) do
+ActiveRecord::Schema.define(version: 2021_04_06_150057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,14 +61,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_142006) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["daily_menu_id"], name: "index_meals_on_daily_menu_id"
     t.index ["recipe_id"], name: "index_meals_on_recipe_id"
-  end
-
-  create_table "meta_supplies", force: :cascade do |t|
-    t.string "name"
-    t.string "category"
-    t.string "sub_category"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pantries", force: :cascade do |t|
@@ -123,6 +115,15 @@ ActiveRecord::Schema.define(version: 2021_04_06_142006) do
     t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
+  create_table "supplies", force: :cascade do |t|
+    t.string "name"
+    t.string "category"
+    t.string "sub_category"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -138,14 +139,14 @@ ActiveRecord::Schema.define(version: 2021_04_06_142006) do
 
   add_foreign_key "daily_menus", "weekly_menus"
   add_foreign_key "grocery_lists", "users"
-  add_foreign_key "ingredients", "meta_supplies"
+  add_foreign_key "ingredients", "supplies", column: "meta_supply_id"
   add_foreign_key "ingredients", "users"
   add_foreign_key "meals", "daily_menus"
   add_foreign_key "meals", "recipes"
   add_foreign_key "pantries", "users"
   add_foreign_key "recipes", "users"
-  add_foreign_key "store_supplies", "meta_supplies"
   add_foreign_key "store_supplies", "stores"
+  add_foreign_key "store_supplies", "supplies", column: "meta_supply_id"
   add_foreign_key "stores", "users"
   add_foreign_key "weekly_menus", "users"
 end
