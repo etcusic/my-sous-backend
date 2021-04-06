@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_140450) do
+ActiveRecord::Schema.define(version: 2021_04_06_140726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,30 +23,11 @@ ActiveRecord::Schema.define(version: 2021_04_06_140450) do
     t.index ["weekly_menu_id"], name: "index_daily_menus_on_weekly_menu_id"
   end
 
-  create_table "grocery_list_ingredients", force: :cascade do |t|
-    t.bigint "grocery_list_id", null: false
-    t.bigint "ingredient_id", null: false
-    t.float "quantity"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["grocery_list_id"], name: "index_grocery_list_ingredients_on_grocery_list_id"
-    t.index ["ingredient_id"], name: "index_grocery_list_ingredients_on_ingredient_id"
-  end
-
   create_table "grocery_lists", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_grocery_lists_on_user_id"
-  end
-
-  create_table "ingredients", force: :cascade do |t|
-    t.string "name"
-    t.string "unit"
-    t.float "cost_per_unit"
-    t.string "category"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "meals", force: :cascade do |t|
@@ -72,26 +53,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_140450) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_pantries_on_user_id"
-  end
-
-  create_table "pantry_ingredients", force: :cascade do |t|
-    t.bigint "pantry_id", null: false
-    t.bigint "ingredient_id", null: false
-    t.float "quantity"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_pantry_ingredients_on_ingredient_id"
-    t.index ["pantry_id"], name: "index_pantry_ingredients_on_pantry_id"
-  end
-
-  create_table "recipe_ingredients", force: :cascade do |t|
-    t.bigint "recipe_id", null: false
-    t.bigint "ingredient_id", null: false
-    t.float "quantity"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
-    t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -137,16 +98,10 @@ ActiveRecord::Schema.define(version: 2021_04_06_140450) do
   end
 
   add_foreign_key "daily_menus", "weekly_menus"
-  add_foreign_key "grocery_list_ingredients", "grocery_lists"
-  add_foreign_key "grocery_list_ingredients", "ingredients"
   add_foreign_key "grocery_lists", "users"
   add_foreign_key "meals", "daily_menus"
   add_foreign_key "meals", "recipes"
   add_foreign_key "pantries", "users"
-  add_foreign_key "pantry_ingredients", "ingredients"
-  add_foreign_key "pantry_ingredients", "pantries"
-  add_foreign_key "recipe_ingredients", "ingredients"
-  add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"
   add_foreign_key "store_supplies", "meta_supplies"
   add_foreign_key "store_supplies", "stores"

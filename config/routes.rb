@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  resources :ingredients
   resources :store_supplies
   resources :stores
   resources :meta_supplies
-  resources :ingredients
   
   resources :users do 
     resources :weekly_menus
