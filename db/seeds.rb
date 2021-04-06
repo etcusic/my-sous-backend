@@ -1,4 +1,3 @@
-# rails g resource MetaSupply name:string category:string sub_category:string
 # rails g resource User name:string
 
 # rails g resource Store user:belongs_to name:string
@@ -6,14 +5,13 @@
 # rails g resource GroceryList user:belongs_to
 # rails g resource Recipe user:belongs_to name:string servings:integer instructions:text meal:boolean
 
+# rails g resource Supply user:belongs_to name:string category:string sub_category:string unit:string latest_cost_per_unit:float running_quantity:float running_cost:float
 # rails g resource StoreSupply store:belongs_to meta_supply:belongs_to unit:string cost_per_unit:float
-# rails g resource Ingredient user:belongs_to meta_supply:belongs_to name:string category:string unit:string latest_cost_per_unit:float running_quantity:float running_cost:float
+# rails g resource Ingredient supply:belongs_to pantry_id:integer recipe_id:integer grocery_list_id:integer quantity:float #=> STI
 
-# rails g model PantryIngredient pantry:belongs_to ingredient:belongs_to quantity:float
-# rails g model GroceryListIngredient grocery_list:belongs_to ingredient:belongs_to quantity:float
-# rails g model RecipeIngredient recipe:belongs_to ingredient:belongs_to quantity:float
-
-# add IngredientJoinTable model for sub ingredients to inherit from
+# class PantryIngredient < Ingredient => pantry:belongs_to 
+# class GroceryListIngredient < Ingredient => grocery_list:belongs_to 
+# class RecipeIngredient < Ingredient => recipe:belongs_to 
 
 # rails g resource WeeklyMenu user:belongs_to 
 # has_many :daily_menus || has_many :meals, through: :daily_menus

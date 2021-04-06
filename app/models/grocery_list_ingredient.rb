@@ -1,3 +1,3 @@
-class GroceryListIngredient < ApplicationRecord
-    belongs_to :user, :grocery_list
+class GroceryListIngredient < Ingredient
+    belongs_to :grocery_list
 end
