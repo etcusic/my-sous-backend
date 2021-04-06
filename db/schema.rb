@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_140308) do
+ActiveRecord::Schema.define(version: 2021_04_06_140450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,25 @@ ActiveRecord::Schema.define(version: 2021_04_06_140308) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "store_supplies", force: :cascade do |t|
+    t.bigint "store_id", null: false
+    t.bigint "meta_supply_id", null: false
+    t.string "unit"
+    t.float "cost_per_unit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meta_supply_id"], name: "index_store_supplies_on_meta_supply_id"
+    t.index ["store_id"], name: "index_store_supplies_on_store_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_stores_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -129,5 +148,8 @@ ActiveRecord::Schema.define(version: 2021_04_06_140308) do
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"
+  add_foreign_key "store_supplies", "meta_supplies"
+  add_foreign_key "store_supplies", "stores"
+  add_foreign_key "stores", "users"
   add_foreign_key "weekly_menus", "users"
 end

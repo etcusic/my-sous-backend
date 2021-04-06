@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  store: one
+  meta_supply: one
+  unit: MyString
+  cost_per_unit: 1.5
+
+two:
+  store: two
+  meta_supply: two
+  unit: MyString
+  cost_per_unit: 1.5

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :store_supplies
+  resources :stores
   resources :meta_supplies
   resources :ingredients
   

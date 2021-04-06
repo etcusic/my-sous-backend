@@ -1,0 +1,2 @@
+class StoreSuppliesController < ApplicationController
+end
