@@ -6,7 +6,7 @@
 # rails g resource Recipe user:belongs_to name:string servings:integer instructions:text meal:boolean
 
 # rails g resource Supply user:belongs_to name:string category:string sub_category:string unit:string latest_cost_per_unit:float running_quantity:float running_cost:float
-# rails g resource StoreSupply store:belongs_to meta_supply:belongs_to unit:string cost_per_unit:float
+# rails g resource StoreSupply store:belongs_to supply:belongs_to unit:string cost_per_unit:float
 # rails g resource Ingredient supply:belongs_to pantry_id:integer recipe_id:integer grocery_list_id:integer quantity:float #=> STI
 
 # class PantryIngredient < Ingredient => pantry:belongs_to 
@@ -20,210 +20,185 @@
 # rails g model Meal daily_menu:belongs_to recipe:belongs_to quantity:integer
 
 
-User.create(name: "Mr Bojangles")
-Pantry.create(user_id: 1)
-
 PRODUCE = [
-    {name: 'yellow bell pepper', cost_per_unit: 0.9, unit: 'oz', category: 'produce'},
-    {name: 'green bell pepper', cost_per_unit: 0.7, unit: 'pcs', category: 'produce'},
-    {name: 'red bell pepper', cost_per_unit: 0.9, unit: 'oz', category: 'produce'},
-    {name: 'jalapeno pepper', cost_per_unit: 0.07, unit: 'oz', category: 'produce'},
-    {name: 'pobalano pepper', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'yellow onion', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'white onion', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'red onion', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'green onion', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'garlic', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'zucchini', cost_per_unit: 0.09, unit: 'oz', category: 'produce'},
-    {name: 'yellow squash', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'mushroom', cost_per_unit: 0.18, unit: 'oz', category: 'produce'},
-    {name: 'shredded carrot', cost_per_unit: 0.18, unit: 'oz', category: 'produce'},
-    {name: 'baby carrots', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'bulk carrots', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'celery', cost_per_unit: 0.1, unit: 'oz', category: 'produce'}, 
-    {name: 'cabbage', cost_per_unit: 0.04, unit: 'oz', category: 'produce'},
-    {name: 'spinach', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'romaine lettuce', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'iceberg lettuce', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'kale', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'parsley', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'mint', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'rosemary', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'cilantro', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'basil', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'red potatoes', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'mini potatoes', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'sweet potatoes', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'corn', cost_per_unit: 0.09, unit: 'oz', category: 'produce'},
-    {name: 'lime', cost_per_unit: 0.5, unit: 'pcs', category: 'produce'},
-    {name: 'lemmon', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'fresh ginger', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'tube ginger', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'tube lemongrass', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
-    {name: 'tube mixed herb', cost_per_unit: 0.1, unit: 'oz', category: 'produce'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'produce'},
+    {name: 'yellow bell pepper', category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'green bell pepper',category: "food", sub_category: "produce", unit: 'pcs', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'red bell pepper',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'jalapeno pepper',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'pobalano pepper',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'yellow onion',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'white onion',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'red onion',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'green onion',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'garlic',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'zucchini',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'yellow squash',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'mushroom',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'shredded carrot',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'baby carrots',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'bulk carrots',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'celery',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cabbage',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'spinach',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'romaine lettuce',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'iceberg lettuce',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'kale',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'parsley',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'mint',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'rosemary',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cilantro',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'basil',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'red potatoes',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'mini potatoes',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sweet potatoes',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'corn',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'lime',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'lemmon',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'fresh ginger',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'tube ginger',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'tube lemongrass',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'tube mixed herb',category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "produce", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 PROTEINS = [
-    {name: 'egg', cost_per_unit: 0.27, unit: 'pcs', category: 'proteins'},
-    {name: 'sliced turkey', cost_per_unit: 0.1, unit: 'oz', category: 'proteins'},
-    {name: 'ground turkey', cost_per_unit: 0.19, unit: 'oz', category: 'proteins'},
-    {name: 'chicken breast', cost_per_unit: 0.13, unit: 'oz', category: 'proteins'},
-    {name: 'grilled chicken', cost_per_unit: 0.13, unit: 'oz', category: 'proteins'},
-    {name: 'whole chicken', cost_per_unit: 0.13, unit: 'oz', category: 'proteins'},
-    {name: 'shrimp', cost_per_unit: 0.27, unit: 'oz', category: 'proteins'},
-    {name: 'pork loin', cost_per_unit: 0.27, unit: 'oz', category: 'proteins'},
-    {name: 'pork chops', cost_per_unit: 0.27, unit: 'oz', category: 'proteins'},
-    {name: 'salmon', cost_per_unit: 0.27, unit: 'oz', category: 'proteins'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'proteins'},
+    {name: 'egg', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sliced turkey', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'ground turkey', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'chicken breast', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'grilled chicken', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'whole chicken', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'shrimp', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'pork loin', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'pork chops', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'salmon', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "proteins", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 DAIRY = [
-    {name: 'butter', cost_per_unit: 0.1, unit: 'oz', category: 'dairy'},
-    {name: 'feta', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},
-    {name: 'sliced cheddar', cost_per_unit: 0.1, unit: 'oz', category: 'dairy'},
-    {name: 'fresh parmesan', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},
-    {name: 'can parmesan', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},
-    {name: 'shredded monterrey', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},   
-    {name: 'milk', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},
-    {name: 'heavy cream', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'},
-    {name: 'sour cream', cost_per_unit: 0.3, unit: 'oz', category: 'dairy'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'dairy'},
+    {name: 'butter', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'feta', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sliced cheddar', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'fresh parmesan', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'can parmesan', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'shredded monterrey', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'milk', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'heavy cream', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sour cream', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0} 
+    # {name: '', category: "food", sub_category: "dairy", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 DRIED_GOODS = [
-    {name: 'canned tomato', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'canned pineapple', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'coconut milk', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'cashew', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'pasta', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'brown rice', cost_per_unit: 0.06, unit: 'oz', category: 'dried goods'},
-    {name: 'jasmine rice', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'basmati rice', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'wild rice', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'quinoa', cost_per_unit: 0.15, unit: 'oz', category: 'dried goods'},
-    {name: 'bread', cost_per_unit: 0.13, unit: 'pcs', category: 'dried goods'},
-    {name: 'corn tortilla', cost_per_unit: 0.08, unit: 'pcs', category: 'dried goods'},
-    {name: 'flour tortilla', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'olive oil', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'vegetable oil', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'sesame oil', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'beef base', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'chicken base', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'flour', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'panko', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'seaweed', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'sugar', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
-    {name: 'brown sugar', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'dried goods'},
+    {name: 'canned tomato', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'canned pineapple', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'coconut milk', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cashew', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'pasta', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'brown rice', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'jasmine rice', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'basmati rice', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'wild rice', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'quinoa', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'bread', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'corn tortilla', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'flour tortilla', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'olive oil', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'vegetable oil', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sesame oil', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'beef base', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'chicken base', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'flour', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'panko', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'seaweed', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sugar', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'brown sugar', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "dried goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 FROZEN_GOODS = [
-    {name: 'frozen corn', cost_per_unit: 0.09, unit: 'oz', category: 'frozen goods'},
-    {name: 'frozen broccoli', cost_per_unit: 0.09, unit: 'oz', category: 'frozen goods'},
-    {name: 'frozen veg medley', cost_per_unit: 0.09, unit: 'oz', category: 'frozen goods'},
-    {name: 'frozen peas', cost_per_unit: 0.09, unit: 'oz', category: 'frozen goods'},
-    {name: 'frozen pizza', cost_per_unit: 0.09, unit: 'pcs', category: 'frozen goods'},
-    {name: 'frozen samosas', cost_per_unit: 0.1, unit: 'oz', category: 'frozen goods'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'frozen goods'},
+    {name: 'frozen corn', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'frozen broccoli', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'frozen veg medley', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'frozen peas', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'frozen pizza', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'frozen samosas', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "frozen goods", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 CONDIMENTS = [
-    {name: 'soy sauce', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'oyster sauce', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'sambal', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'tomato sauce', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'paste', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'sriracha', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'pesto', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'sundried tomato paste', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'yellow mustard', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'whole grain mustard', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'brown mustard', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'tamarind paste', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'worcestershire sauce', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'ketchup', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'balsamic vinagrette', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
-    {name: 'hummus', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'condiments'},
+    {name: 'soy sauce', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'oyster sauce', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sambal', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'tomato sauce', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'paste', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sriracha', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'pesto', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sundried tomato paste', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'yellow mustard', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'whole grain mustard', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'brown mustard', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'tamarind paste', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'worcestershire sauce', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'ketchup', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'balsamic vinagrette', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'hummus', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "condiments", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 
 SPICES = [
-    {name: 'kosher salt', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'sea salt', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'ground pepper', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'cracked pepper', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'paprika', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'allspice', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'cajun seasoning', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'cayenne', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'dried oregano', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'dried basil', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'garam masala', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'red pepper flakes', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'garlic powder', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'onion powder', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'curry powder', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'chili powder', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'cumin', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
-    {name: 'coriander', cost_per_unit: 0.1, unit: 'oz', category: 'spices'}
-    # {name: '', cost_per_unit: 0.1, unit: 'oz', category: 'spices'},
+    {name: 'kosher salt', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'sea salt', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'ground pepper', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cracked pepper', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'paprika', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'allspice', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cajun seasoning', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cayenne', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'dried oregano', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'dried basil', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'garam masala', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'red pepper flakes', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'garlic powder', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'onion powder', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'curry powder', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'chili powder', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'cumin', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
+    {name: 'coriander', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}
+    # {name: '', category: "food", sub_category: "spices", unit: 'oz', latest_cost_per_unit: 0.1, running_quantity: 0, running_cost: 0}, 
 ]
 
 FOOD = [PRODUCE, PROTEINS, DAIRY, DRIED_GOODS, FROZEN_GOODS, CONDIMENTS, SPICES].flatten!
 
+### BEGIN CREATING SEEDS HERE ###
+mr_bonjangles = User.create(name: "Mr Bojangles")
+
+Pantry.create(user_id: mr_bonjangles.id)
+mr_bonjangles.stores.build(name: "Walmart").save
+mr_bonjangles.stores.build(name: "Costco").save
+mr_bonjangles.stores.build(name: "K&S").save
+
 FOOD.each do |item| 
-    ing = Ingredient.create(item)
-    PantryIngredient.create({pantry_id: 1, ingredient_id: ing.id, quantity: rand(2..80)})
+    sup = mr_bonjangles.supplies.build(item)
+    sup.save
+    PantryIngredient.create({pantry_id: mr_bonjangles.id, supply_id: sup.id, quantity: rand(2..80)})
 end
 
-Recipe.create(user_id: 1, name: "Grilled Chicken & Veg", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Grilled Salmon & Veg", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Turkey Tacos", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Southwest Chili", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Turkey Bolognese", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Whole Roast Chicken", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Pho Ga with Cabbage Noodles", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Phad Thai wiht Cabbage Noodles", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Bibimbap", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Cashew Chicken", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Garlic Ginger Turkey", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Unstuffed Peppers", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Frozen Pizza", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Chicken Salad", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Sandwich", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Turkey & Hummus Wraps", servings: 1, instructions: "")
-Recipe.create(user_id: 1, name: "Egg & Tortilla Rollups", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Grilled Chicken & Veg", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Grilled Salmon & Veg", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Turkey Tacos", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Southwest Chili", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Turkey Bolognese", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Whole Roast Chicken", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Pho Ga with Cabbage Noodles", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Phad Thai wiht Cabbage Noodles", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Bibimbap", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Cashew Chicken", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Garlic Ginger Turkey", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Unstuffed Peppers", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Frozen Pizza", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Chicken Salad", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Sandwich", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Turkey & Hummus Wraps", servings: 1, instructions: "")
+Recipe.create(user_id: mr_bonjangles.id, name: "Egg & Tortilla Rollups", servings: 1, instructions: "")
 
-# binding.pry
-# Recipes:
-# - Grilled chicken/salmon and veg
-# - Turkey Tacos
-# - Southwest Chili
-# - Turkey Bolognese
-# - Cabbage Pho Ga
-# - Cabbage Phad Thai
-# - Bibimbap - turkey or salmon
-# - Cashew Chicken
-# - Garlic Ginger Turkey
-# - Unstuffed Peppers
-# - Frozen Pizza
-# - Chicken Salad
-# - Sandwich
-# - Turkey and Hummus wraps
-# - Egg & Tortilla wraps
-# - 
-
-
-
-# def add_ingredients(recipe_id, ingredient_ids)
-#     ingredient_ids.map{|ing_id| RecipeIngredient.create({recipe_id: recipe_id, ingredient_id: ing_id, quantity: rand(1..20)})}
-# end
-
-# add_ingredients(1, [1, 6, 20, 16, 14, 13])
-# add_ingredients(2, [1, 6, 25, 21, 13, 14])
-# add_ingredients(3, [1, 6, 14, 11, 19])
-# add_ingredients(4, [28, 5, 24, 14, 18])
-# add_ingredients(5, [5, 4, 12, 18, 10])
-# add_ingredients(6, [6, 29, 7, 13, 19, 21])
