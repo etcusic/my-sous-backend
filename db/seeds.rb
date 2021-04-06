@@ -173,7 +173,7 @@ FOOD = [PRODUCE, PROTEINS, DAIRY, DRIED_GOODS, FROZEN_GOODS, CONDIMENTS, SPICES]
 ### BEGIN CREATING SEEDS HERE ###
 mr_bonjangles = User.create(name: "Mr Bojangles")
 
-Pantry.create(user_id: mr_bonjangles.id)
+mr_b_pantry = Pantry.create(user_id: mr_bonjangles.id)
 mr_bonjangles.stores.build(name: "Walmart").save
 mr_bonjangles.stores.build(name: "Costco").save
 mr_bonjangles.stores.build(name: "K&S").save
@@ -181,7 +181,7 @@ mr_bonjangles.stores.build(name: "K&S").save
 FOOD.each do |item| 
     sup = mr_bonjangles.supplies.build(item)
     sup.save
-    PantryIngredient.create({pantry_id: mr_bonjangles.id, supply_id: sup.id, quantity: rand(2..80)})
+    PantryIngredient.create({pantry_id: mr_b_pantry.id, supply_id: sup.id, quantity: rand(2..80)})
 end
 
 Recipe.create(user_id: mr_bonjangles.id, name: "Grilled Chicken & Veg", servings: 1, instructions: "")
