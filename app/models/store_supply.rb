@@ -1,4 +1,4 @@
 class StoreSupply < ApplicationRecord
   belongs_to :store
-  belongs_to :meta_supply
+  belongs_to :supply
 end

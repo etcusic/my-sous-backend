@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users do 
     resources :supplies
     resources :stores  # should I nest :store_supplies here ???
-    resources :pantries
+    resources :pantries  
     resources :recipes
     resources :grocery_lists
     resources :weekly_menus
