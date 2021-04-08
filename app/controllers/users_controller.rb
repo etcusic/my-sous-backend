@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
 
+    def index
+        binding.pry
+    end
+
     def show
-        # binding.pry
         @user = User.find_by_id(user_params[:id])
         render json: @user.initialization_info
     end

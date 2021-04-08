@@ -5,8 +5,10 @@ class Recipe < ApplicationRecord
   has_many :supplies, through: :recipe_ingredients
 
   def initialization_info
-    ingredients = {ingredients: self.ingredients.map{ |ing| ing.initialization_info } }
-    info = self.attributes.merge!(ingredients)
+    self
+    # change back once we make progress on frontend ??
+    # ingredients = {ingredients: self.ingredients.map{ |ing| ing.initialization_info } }
+    # info = self.attributes.merge!(ingredients)
   end
 
 end
