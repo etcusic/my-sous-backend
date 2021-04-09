@@ -9,7 +9,7 @@ class User < ApplicationRecord
   def initialization_info
     info = {
       user: {id: self.id, name: self.name},
-      supplies: Supply.initialization_info(self),
+      supplies_array: self.supplies,
       pantry: self.pantry.initialization_info,
       recipes: self.recipes.map{|recipe| recipe.initialization_info},
       stores: self.stores.map{ |store| store.initialization_info }
