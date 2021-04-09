@@ -6,7 +6,10 @@ class Supply < ApplicationRecord
     def self.initialization_info (user)
         hash = {}
         supplies = user.supplies.each{ |supply| hash[supply.id] = supply }
-        hash
+        init_info = {
+            all: user.supplies,
+            dictionary: hash
+        }
     end
 
 end
