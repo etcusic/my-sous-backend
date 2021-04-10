@@ -202,3 +202,23 @@ Recipe.create(user_id: mr_bonjangles.id, name: "Sandwich", servings: 1, instruct
 Recipe.create(user_id: mr_bonjangles.id, name: "Turkey & Hummus Wraps", servings: 1, instructions: "")
 Recipe.create(user_id: mr_bonjangles.id, name: "Egg & Tortilla Rollups", servings: 1, instructions: "")
 
+# Walmart supplies
+StoreSupply.create(store_id: 1, supply_id: 2, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 1, supply_id: 14, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 1, supply_id: 19, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 1, supply_id: 13, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 1, supply_id: 28, cost_per_unit: 0.1)
+
+# Costco supplies
+StoreSupply.create(store_id: 2, supply_id: 29, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 2, supply_id: 41, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 2, supply_id: 39, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 2, supply_id: 44, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 2, supply_id: 47, cost_per_unit: 0.1)
+
+# K&S supplies
+StoreSupply.create(store_id: 3, supply_id: 7, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 3, supply_id: 4, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 3, supply_id: 24, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 3, supply_id: 16, cost_per_unit: 0.1)
+StoreSupply.create(store_id: 3, supply_id: 11, cost_per_unit: 0.1)
