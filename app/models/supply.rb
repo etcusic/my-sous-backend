@@ -9,4 +9,8 @@ class Supply < ApplicationRecord
         hash
     end
 
+    def assemble (associated_supply_attrs)
+        assembled_hash = self.attributes.merge!(associated_supply_attrs)
+    end
+
 end
