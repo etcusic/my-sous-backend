@@ -5,7 +5,7 @@ class Store < ApplicationRecord
   def initialization_info
     store_info = self.attributes
     store_info[:supplies] = []
-    self.store_supplies.each{|sup| store_info[:supplies] << sup.initialization_info } 
+    self.store_supplies.each{|sup| store_info[:supplies] << sup.attributes } 
     store_info
   end
 

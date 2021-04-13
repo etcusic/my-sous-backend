@@ -6,11 +6,10 @@ class Supply < ApplicationRecord
     def self.initialization_info (user)
         hash = {}
         user.supplies.each{ |supply| hash[supply.id] = supply.attributes }
-        hash
-    end
-
-    def assemble (associated_supply_attrs)
-        assembled_hash = self.attributes.merge!(associated_supply_attrs)
+        info = {
+            array: user.supplies,
+            dictionary: hash
+        }
     end
 
 end
