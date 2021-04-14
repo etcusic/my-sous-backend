@@ -3,12 +3,14 @@ class Recipe < ApplicationRecord
   has_many :recipe_ingredients, dependent: :destroy
   alias_attribute :ingredients, :recipe_ingredients 
   has_many :supplies, through: :recipe_ingredients
+  
+  include IngredientProcessor
 
-  def initialization_info
-    self
-    # change back once we make progress on frontend ??
-    # ingredients = {ingredients: self.ingredients.map{ |ing| ing.initialization_info } }
-    # info = self.attributes.merge!(ingredients)
+  # too much processing going on here - move assembly into user. call dictionary just once and assemble pantry, recipes, etc from that one dictionary pull
+  def initialization_info(supply_dictionary)
+    object = self.attributes
+    object["ingredients"] = self.assembled_ingredients(supply_dictionary)
+    object
   end
 
 end
