@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   resources :users do 
-    # resources :supplies
+    resources :supplies
     # resources :stores  # should I nest :store_supplies here ???
     # resources :pantries  
     # resources :recipes
